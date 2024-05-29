@@ -1,75 +1,11 @@
-# Nuxt 3 Minimal Starter
+# Rubik's Cube Timer Web App
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Description
+Cette application web permet aux utilisateurs de chronométrer leurs résolutions de Rubik's Cube, de rejoindre des groupes, de discuter avec d'autres membres du groupe, de suivre leurs progrès à travers des sessions et des badges, et de gagner des points d'XP.
 
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Fonctionnalités
+- **Inscription et Authentification des Utilisateurs** : Inscription sécurisée avec vérification par email, récupération de mot de passe.
+- **Gestion des Profils Utilisateurs** : Profil utilisateur avec photo, biographie et historique des temps.
+- **Gestion des Groupes** : Création et gestion de groupes, invitation d'utilisateurs.
+- **Timer de Rubik's Cube** : Interface de timer avec démarrage/arrêt automatique, calcul des moyennes.
+- **
