@@ -15,17 +15,17 @@ datasource db {
 
 model Sessions {
   id_session Int      @id @default(autoincrement())
-  name    String
+  name       String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-  deleted_at DateTime
+  deleted_at DateTime?
 }
 
 model Times {
-  id_time    Int      @id @default(autoincrement())
-  id_session Int
+  id_time     Int      @id @default(autoincrement())
+  id_session  Int?
   time_in_sec Float
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-  deleted_at DateTime
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+  deleted_at  DateTime?
 }
