@@ -1,7 +1,4 @@
 <template>
-  <div>
-    hello world
-  </div>
   <div class="">
     <p class="text-9xl" :class="{
       'text-red-500': isKeyPressed && !isChronoReady,
@@ -47,12 +44,10 @@ const storeTime = async () => {
   let timestamp = moment(currentTime.value.diff(startTime.value)).valueOf()
 
 
-  const time = await useFetch('/api/times/addTimes', {
+  await useFetch('/api/times/addTimes', {
     method: 'POST',
     body: JSON.stringify({time_in_sec: timestamp})
   });
-
-  console.log(time);
 }
 
 const handleKeyDown = (e: KeyboardEvent) => {
