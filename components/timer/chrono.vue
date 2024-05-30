@@ -41,6 +41,20 @@ const displayTime = computed(() => {
   return moment.utc(duration.asMilliseconds()).format('mm:ss.SS');
 });
 
+const storeTime = async () => {
+  if (!startTime.value || !currentTime.value) return;
+
+  let timestamp = moment(currentTime.value.diff(startTime.value)).valueOf()
+
+
+  const time = await useFetch('/api/times/addTimes', {
+    method: 'POST',
+    body: JSON.stringify({time_in_sec: timestamp})
+  });
+
+  console.log(time);
+}
+
 const handleKeyDown = (e: KeyboardEvent) => {
   if (e.code === 'Space' && !isKeyPressed.value) {
     isKeyPressed.value = true;
@@ -62,6 +76,8 @@ const handleKeyDown = (e: KeyboardEvent) => {
         timer = null;
         isChronoReady.value = false;
       }
+
+      storeTime();
     }
   }
 }
