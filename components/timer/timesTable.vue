@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import moment from "moment";
+import {getTimes} from "~/services/timesService";
+
+let solves = ref<Times[]>([])
+
+async function getSolves() {
+  getTimes().then(
+      res => {
+        solves.value = res;
+      }
+  )
+  console.log(solves.value)
+}
+
+function displayTime(timestamp: number) {
+  return moment.utc(timestamp).format('mm:ss.SS')
+}
+
+onMounted( () => {
+  getSolves()
+  window.addEventListener('keyup', getSolves);
+})
+
+</script>
+
 <template>
   <div class="px-4 sm:px-6 lg:px-8">
     <div class="sm:flex sm:items-center">
@@ -22,7 +48,7 @@
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-            <tr v-for="solve in solves" :key="solves.id_time" class="divide-x divide-gray-200">
+            <tr v-for="solve in solves" :key="solve.id_time" class="divide-x divide-gray-200">
               <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-0">{{ solve.id_time }}</td>
               <td class="whitespace-nowrap p-4 text-3xl text-gray-500">{{ displayTime(solve.time_in_sec) }}</td>
               <td class="whitespace-nowrap p-4 text-sm text-gray-500">null</td>
@@ -35,28 +61,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import moment from "moment";
-import {onMounted} from "vue";
-
-const solves = ref([])
-
-async function getSolves() {
-  solves.value = await $fetch('/api/times')
-}
-
-function displayTime(timestamp) {
-  return moment.utc(timestamp).format('mm:ss.SS')
-}
-
-onMounted( () => {
-  getSolves()
-  window.addEventListener('keyup', getSolves);
-})
-
-
-</script>
 
 <style scoped>
 

@@ -13,13 +13,14 @@
 <script setup lang="ts">
 import {onMounted} from "vue";
 import moment from "moment";
+import {addTimes} from "~/services/timesService";
 
 let timeout : any
 let timer : number | null = null;
 
 const isKeyPressed = ref(false);
 const isChronoReady = ref(false);
-const isChronoSarted = ref(false);
+const isChronoSarted = ref<boolean>(false);
 
 const startTime = ref<moment.Moment | null>(null);
 const currentTime = ref<moment.Moment | null>(null);
@@ -51,10 +52,9 @@ const storeTime = async () => {
   let timestamp = moment(currentTime.value.diff(startTime.value)).valueOf()
 
 
-  await useFetch('/api/times/addTimes', {
-    method: 'POST',
-    body: JSON.stringify({time_in_sec: timestamp})
-  });
+  await addTimes(timestamp).then( res => {
+    console.log("temps enregistrer avec succés")
+      })
 }
 
 const handleKeyDown = (e: KeyboardEvent) => {
