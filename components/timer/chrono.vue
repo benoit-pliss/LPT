@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="fixed">
     <p class="text-9xl" :class="{
       'text-red-500': isKeyPressed && !isChronoReady,
       'text-green-500': isChronoReady,
@@ -13,13 +13,14 @@
 <script setup lang="ts">
 import {onMounted} from "vue";
 import moment from "moment";
+import {addTimes} from "~/services/timesService";
 
 let timeout : any
 let timer : number | null = null;
 
 const isKeyPressed = ref(false);
 const isChronoReady = ref(false);
-const isChronoSarted = ref(false);
+const isChronoSarted = ref<boolean>(false);
 
 const startTime = ref<moment.Moment | null>(null);
 const currentTime = ref<moment.Moment | null>(null);
@@ -32,10 +33,17 @@ const updateCurrentTime = () => {
 }
 
 const displayTime = computed(() => {
-  if (!startTime.value || !currentTime.value) return '00:00.00';
+  if (!startTime.value || !currentTime.value) return '00.0';
 
   const duration = moment.duration(currentTime.value.diff(startTime.value));
-  return moment.utc(duration.asMilliseconds()).format('mm:ss.SS');
+
+  const time = moment.utc(duration.asMilliseconds()).format('mm:ss.S');
+
+  if (time.startsWith('00:')) {
+    return time.slice(3);
+  }
+
+  return time;
 });
 
 const storeTime = async () => {
@@ -44,10 +52,9 @@ const storeTime = async () => {
   let timestamp = moment(currentTime.value.diff(startTime.value)).valueOf()
 
 
-  await useFetch('/api/times/addTimes', {
-    method: 'POST',
-    body: JSON.stringify({time_in_sec: timestamp})
-  });
+  await addTimes(timestamp).then( res => {
+    console.log("temps enregistrer avec succés")
+      })
 }
 
 const handleKeyDown = (e: KeyboardEvent) => {
