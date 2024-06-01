@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="fixed">
     <p class="text-9xl" :class="{
       'text-red-500': isKeyPressed && !isChronoReady,
       'text-green-500': isChronoReady,
@@ -32,10 +32,17 @@ const updateCurrentTime = () => {
 }
 
 const displayTime = computed(() => {
-  if (!startTime.value || !currentTime.value) return '00:00.00';
+  if (!startTime.value || !currentTime.value) return '00.0';
 
   const duration = moment.duration(currentTime.value.diff(startTime.value));
-  return moment.utc(duration.asMilliseconds()).format('mm:ss.SS');
+
+  const time = moment.utc(duration.asMilliseconds()).format('mm:ss.S');
+
+  if (time.startsWith('00:')) {
+    return time.slice(3);
+  }
+
+  return time;
 });
 
 const storeTime = async () => {
