@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import moment from "moment";
-import {getTimes} from "~/services/timesService";
+import {getLast5Times, getTimes} from "~/services/timesService";
 
 let solves = ref<Times[]>([])
 
@@ -19,9 +19,27 @@ function displayTime(timestamp: number) {
 
 onMounted( () => {
   getSolves()
+  getAo5()
+  console.log(getAo5())
   window.addEventListener('keyup', getSolves);
 })
 
+async function getAo5() : Promise<number>{
+  if (solves.value.length < 5) return 0
+
+  try {
+    const last5Times = await getLast5Times();
+    const list = removeBestAndLowerTime(last5Times);
+    console.log(list);
+
+    let totalTimeInTimestamp : number = list.reduce((sum, time) => sum + time.time_in_sec, 0)
+    return totalTimeInTimestamp / list.length
+
+  } catch (error) {
+    console.error('Error:', error);
+    return 0;
+  }
+}
 </script>
 
 <template>

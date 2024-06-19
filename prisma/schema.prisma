@@ -25,6 +25,8 @@ model Times {
   id_time     Int      @id @default(autoincrement())
   id_session  Int?
   time_in_sec Float
+  ao_cinq     Float?
+  ao_douze    Float?
   created_at  DateTime? @default(now())
   updated_at  DateTime? @default(now())
   deleted_at  DateTime?

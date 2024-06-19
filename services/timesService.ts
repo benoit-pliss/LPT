@@ -33,3 +33,14 @@ export const addTimes = async (timestamp : number): Promise<void> => {
         console.error(error);
     }
 }
+
+export const getLast5Times = async (): Promise<Times[]> => {
+    try {
+        return await $fetch(`${API_BASE_URL}/times/getLast5Times`, {
+            method: 'GET'
+        })
+    } catch (error) {
+        console.error(error);
+        return []
+    }
+}
